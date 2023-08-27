@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import "./globals.css";
 import {Providers} from "@/redux/provider";
+import Message from "@/components/Message";
 
 export default function RootLayout({
     children,
@@ -10,11 +11,9 @@ export default function RootLayout({
     return (
         <html lang="en">
             <Providers>
-                <body className="bg-slate-950 h-[100vh]">
-                    <header>
-                        <Navbar />
-                    </header>
+                <body>
                     {children}
+                    <Message />
                 </body>
             </Providers>
         </html>

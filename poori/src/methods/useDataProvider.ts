@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ds } from "./httpRequest";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useSetCash } from "@/redux/dispatchers";
+import { useMessage } from "./UI_UX_METHODS";
 
 export type useDataProviderProps = {
     formId: string;
@@ -17,18 +18,23 @@ export default function useDataProvider({
     init,
     disabled,
 }: useDataProviderProps) {
+    const {setMessage} = useMessage()
     const [response, setResponse] = useState<any>();
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
     const setCash = useSetCash();
     const cashed_data = useAppSelector((state) => state.dataCenter[key]);
-
+    const DC_token = useAppSelector((state) => state.dataCenter['token']);
     const fetchingData = () => {
+        const token = DC_token || localStorage.getItem('token')
         setLoading(true);
-        ds(formId, data)
+        ds(formId, data, token as string)
             .then((res) => {
                 setResponse(res);
                 setCash([key, res]);
+                if(res.message){
+                   setMessage(res.message) 
+                }
             })
             .catch((err) => {
                 setError(err);
@@ -41,9 +47,8 @@ export default function useDataProvider({
         if (!cashed_data && !disabled && !init) {
             fetchingData();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line 
     }, [formId]);
     const reload = ()=>fetchingData()
-
-    return [response || init, loading, reload,error, ];
+    return [response || cashed_data || init, loading, reload,error, ];
 }

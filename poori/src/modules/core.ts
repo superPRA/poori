@@ -52,6 +52,7 @@ export default async function Core(request: Request, mode: string) {
             if (typeof value === "string") {
                 return {
                     done: false,
+                    error: "",
                     message: value,
                 };
             } else if (value === false) {
@@ -94,6 +95,7 @@ export default async function Core(request: Request, mode: string) {
     }
     return {
         done: false,
+        error: "unknown--error",
         message: "unknown--error",
     };
 }
@@ -107,7 +109,8 @@ const extractBody = async (request: Request) => {
 };
 
 const authentication = async (request: Request) => {
-    const token = new Headers(request?.headers || {}).get("Cookie");
+    const headers = new Headers(request?.headers || {});
+    const token = headers.get("Auth") || headers.get("Cookie")
     const res = await pool.query("SELECT * FROM users WHERE token = $1", [
         token,
     ]);

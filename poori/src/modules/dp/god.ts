@@ -1,4 +1,4 @@
-import { module } from "../core";
+import { module } from "../type";
 
 const mod: module = [
     {
@@ -18,6 +18,7 @@ const mod: module = [
         },
         "response": (ctx)=>{
             return {
+                done: true,
                 'data-provider': {
                     res: ctx.action.action
                 }

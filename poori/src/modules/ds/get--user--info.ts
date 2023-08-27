@@ -3,23 +3,16 @@ import { module } from "../type";
 
 const mod: module = [
     {
-        bodyCheck: (context, helpers) => {
-            const bd = context.body.data;
-            if (!bd || !bd.name) {
-                return "no body";
-            }
-            return true;
-        },
         users: (context, helpers) => {
             return {
                 sql: "SELECT * FROM users",
-                next: (r)=>r.rows[0].rand_id
+                next: (r)=>r.rows[0]
             }
         },
         response: (context, helpers)=>{
             return {
                 'data-provider': {
-                    user_id: context.action.users
+                    user: context.action.users
                 }
             }
         }

@@ -32,6 +32,7 @@ export type module = {
               "data-provider": {
                   [index: string]: any;
               };
+              message?: string
           }
         | {
               error: string;

@@ -38,7 +38,7 @@ export default function Table({ headers, data }: Props) {
                 </tr>
             </thead>
             <tbody>
-                {data?.map((dt, d_index) => {
+                {Array.isArray(data) && data?.map((dt, d_index) => {
                     return (
                         <tr key={d_index} className="table-row text-white">
                             {headers.map((header, h_index) => {

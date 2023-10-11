@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import { AiFillCaretDown, AiOutlineHome } from "react-icons/ai";
 import { TbWeight } from "react-icons/tb";
 
@@ -48,3 +49,5 @@ const navItems = [
         to: "/weight",
     },
 ];
+
+

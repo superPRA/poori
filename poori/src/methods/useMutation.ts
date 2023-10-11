@@ -42,10 +42,12 @@ export default function useMutation({
         loading,
     };
 }
+
 export type useMutationProps = {
     formId: string;
     key: string;
     localSave: boolean;
     onSuccess?: (response: any)=>void
 };
+
 export type mutateType = { body: any; next?: (res: any) => any };
